@@ -1,0 +1,9 @@
+export { default as Linkedin } from "./Linkedin1.svg";
+export { default as Twitter } from "./Twitter1.svg";
+export { default as Facebook } from "./Facebook1.svg";
+export { default as Locator } from "./Locator1.svg";
+export { default as Instagram } from "./Instagram1.svg";
+export { default as Wokpa } from "./Wokpa.svg";
+export { default as Spotify } from "./Spotify.svg";
+export { default as Music } from "./Music.svg";
+export { default as Color } from "./Color.svg";
