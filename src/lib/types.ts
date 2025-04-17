@@ -97,7 +97,7 @@ export interface Link {
 }
 
 export interface PodcastListResponse {
-  data: Podcast[];
+  data: IPodcast[];
   current_page: number;
   first_page_url: string;
   from: number;
