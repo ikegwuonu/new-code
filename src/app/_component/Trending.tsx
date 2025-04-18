@@ -18,12 +18,13 @@ export default function Trending() {
           Trending this week
         </p>
         <Title text=" Featured Podcasts" />
-        <div className="grid grid-cols-4 gap-[26px] pt-[31px]">
+        <div className=" pt-[31px]">
           {!isSuccess ? (
             <Skeleton count={4} width={288} height={424} />
           ) : (
             trendingData && (
               <CustomSwiper
+                numberOfSlides={4}
                 slide={trendingData?.map((item, i) => (
                   <TrendingCard key={i} item={item} />
                 ))}
@@ -46,7 +47,10 @@ const TrendingCard = ({ item }: { item: IPodcast }) => {
         alt="Editor"
         className="h-[424px] w-full"
       />
-      <div className="py-3 px-[21px] w-full  gap-4 text-white absolute items-center left-0 bottom-0 bg-black opacity-50">
+      <div
+        className="py-3 px-[21px] w-full bg-gradient-to-b from-transparent to-black 
+       gap-4 text-white absolute items-center left-0 bottom-0  "
+      >
         <p className="pb-[5px] text-[13px]">{8} Episodes</p>
         <p className="font-[700] text-2xl">{item?.title}</p>
       </div>

@@ -1,4 +1,13 @@
 import type { NextConfig } from "next";
+const remoteProtocol = [
+  "d3t3ozftmdmh3i.cloudfront.net",
+  "d3wo5wojvuv7l.cloudfront.net",
+  "api.wokpa.app",
+  "d1sfpqaoey1aeo.cloudfront.net",
+  "s3.amazonaws.com",
+  "wokpa.s3.amazonaws.com",
+  "",
+];
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -10,33 +19,14 @@ const nextConfig: NextConfig = {
     return config;
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "api.wokpa.app",
-        port: "",
-        pathname: "/api/listeners",
-      },
-      {
-        protocol: "https",
-        hostname: "d3wo5wojvuv7l.cloudfront.net",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "d1sfpqaoey1aeo.cloudfront.net",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "s3.amazonaws.com",
-        port: "",
-        pathname: "/**",
-      },
-    ],
+    remotePatterns: remoteProtocol.map((item) => ({
+      protocol: "https",
+      hostname: item,
+      port: "",
+      pathname: "/**",
+    })),
   },
+
   typescript: {
     ignoreBuildErrors: true,
   },

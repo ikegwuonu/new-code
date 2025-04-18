@@ -13,12 +13,20 @@ import {
   Pause,
 } from "lucide-react";
 import { Slider } from "@/components/ui/Slider";
+import { useGetEpisode } from "@/lib/api/actions";
+import { useSearchParams } from "next/navigation";
+import { formatDate } from "@/lib/utils";
+import { BackTen, FrontTen, Gift, Share } from "@/components/svg/icon";
 
 export default function PodcastPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(15); // Starting at 15 seconds as shown in the image
-  const [duration, setDuration] = useState(28 * 60 + 4); // 28:04 in seconds
+
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const id = useSearchParams().get("id");
+  const { data, isSuccess } = useGetEpisode(id || "1");
+  const episode = data?.data;
+  const [duration, setDuration] = useState(episode?.duration || 28 * 60 + 4); // 28:04 in seconds
 
   const formatTime = (timeInSeconds: number) => {
     const minutes = Math.floor(timeInSeconds / 60);
@@ -89,139 +97,126 @@ export default function PodcastPlayer() {
   }, []);
 
   return (
-    <div className="app-container bg-slate-400 pt-8 pb-[67px]">
-      <div className="relative  text-white app-width mx-auto">
-        {/* Hidden audio element */}
-        <audio ref={audioRef} src="/example-podcast.mp3" />
+    <div className="app-container bg-gradient-to-br from-[#2B3221] to-[#f2f2f2]  pt-8 pb-[67px] ">
+      {isSuccess && episode && (
+        <div className="relative  text-white app-width mx-auto">
+          {/* Hidden audio element */}
+          <audio ref={audioRef} src={episode.content_url} />
 
-        {/* Back button */}
-        <Link
-          href="/podcast"
-          className="inline-flex items-center mb-8 hover:underline"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Back to podcast
-        </Link>
+          {/* Back button */}
+          <Link
+            href="/podcast"
+            className="inline-flex items-center mb-8 hover:underline"
+          >
+            <ArrowLeft className="mr-2 h-5 w-5" />
+            Back to podcast
+          </Link>
 
-        {/* Podcast info */}
-        <div className="flex flex-col md:flex-row gap-6 mb-12">
-          <div className="flex-shrink-0">
-            <Image
-              src="/Editor.png"
-              alt="Hope Window Podcast"
-              width={200}
-              height={200}
-              className="rounded-md"
-            />
-          </div>
-
-          <div className="flex-1">
-            <div className="flex flex-wrap gap-x-4 gap-y-1 mb-3 text-sm text-gray-300">
-              <span>SEPT 3, 2023</span>
-              <span className="flex items-center before:content-['•'] before:mx-2">
-                28 MINS
-              </span>
+          {/* Podcast info */}
+          <div className="flex flex-col md:flex-row gap-6 mb-12">
+            <div className="flex-shrink-0">
+              <Image
+                src={episode.picture_url}
+                alt="Hope Window Podcast"
+                width={200}
+                height={200}
+                className="rounded-md"
+              />
             </div>
 
-            <h1 className="text-2xl md:text-3xl font-bold mb-4">
-              The Funeral Experience – the Good, the Bad, and the Ugly
-            </h1>
+            <div className="flex-1">
+              <div className="flex flex-wrap gap-x-4 gap-y-1 mb-3 text-sm text-gray-300 uppercase">
+                <span> {formatDate(episode.created_at)}</span>
+                <span className="flex items-center before:content-['•'] before:mx-2 uppercase">
+                  {episode.duration} MINS
+                </span>
+              </div>
 
-            <p className="text-sm md:text-base mb-4 leading-relaxed">
-              The struggles of a widow begin immediately when her husband dies;
-              she is immediately made to go through various traditional rites,
-              disregarding her pain and process of grieving. Most people in
-              Africa, argue that those rituals are intended to protect widows
-              and not to harm them. This doesn't appear to be the case as some
-              of these practices and beliefs tend to dehumanise the very essence
-              of their womanhood. In this episode, we will talk about these
-              rites and possible solutions to the bad sides and even how to
-              manage the ugly sides. The guest on this episode is Ms Grace
-              Udodong.
-            </p>
+              <h1 className="text-2xl md:text-3xl font-bold mb-4">
+                {episode.title}
+              </h1>
 
-            <button className="text-green-400 font-medium hover:underline">
-              READ MORE
-            </button>
-          </div>
-        </div>
+              <p className="text-sm md:text-base mb-4 leading-relaxed">
+                {episode.description}
+              </p>
 
-        {/* Audio player controls */}
-        <div className="max-w-4xl mx-auto">
-          {/* Progress bar */}
-          <div className="flex items-center gap-3 mb-6">
-            <span className="text-sm w-10">{formatTime(currentTime)}</span>
-            <Slider
-              value={[currentTime]}
-              min={0}
-              max={duration}
-              step={1}
-              onValueChange={handleSliderChange}
-              className="flex-1"
-            />
-            <span className="text-sm w-10">{formatTime(duration)}</span>
-          </div>
-
-          {/* Controls */}
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-4">
-              <button
-                onClick={handleRewind}
-                className="bg-white/10 rounded-full p-2 hover:bg-white/20 transition-colors"
-                aria-label="Rewind 10 seconds"
-              >
-                <div className="relative">
-                  <Rewind className="h-5 w-5" />
-                  <span className="absolute text-[10px] font-bold top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                    10
-                  </span>
-                </div>
-              </button>
-
-              <button
-                onClick={handlePlayPause}
-                className="bg-red-600 rounded-full p-4 hover:bg-red-700 transition-colors"
-                aria-label={isPlaying ? "Pause" : "Play"}
-              >
-                {isPlaying ? (
-                  <Pause className="h-6 w-6" />
-                ) : (
-                  <Play className="h-6 w-6" />
-                )}
-              </button>
-
-              <button
-                onClick={handleForward}
-                className="bg-white/10 rounded-full p-2 hover:bg-white/20 transition-colors"
-                aria-label="Forward 10 seconds"
-              >
-                <div className="relative">
-                  <FastForward className="h-5 w-5" />
-                  <span className="absolute text-[10px] font-bold top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                    10
-                  </span>
-                </div>
+              <button className="text-green-400 font-medium hover:underline">
+                READ MORE
               </button>
             </div>
+          </div>
 
-            <div className="flex items-center gap-4">
-              <button
-                className="bg-white/10 rounded-full p-2 hover:bg-white/20 transition-colors"
-                aria-label="Share"
-              >
-                <Share2 className="h-5 w-5" />
-              </button>
+          {/* Audio player controls */}
+          <div className="max-w-4xl mx-auto">
+            {/* Progress bar */}
+            <div className="flex items-center gap-3 mb-6">
+              <span className="text-sm w-10">{formatTime(currentTime)}</span>
+              <Slider
+                value={[currentTime]}
+                min={0}
+                max={duration}
+                step={1}
+                onValueChange={handleSliderChange}
+                className="flex-1"
+              />
+              <span className="text-sm w-10">{formatTime(duration)}</span>
+            </div>
 
-              <button
-                className="bg-white/10 rounded-full p-2 hover:bg-white/20 transition-colors"
-                aria-label="Download"
-              >
-                <Download className="h-5 w-5" />
-              </button>
+            {/* Controls */}
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={handleRewind}
+                  className="bg-white/10 rounded-full p-2 hover:bg-white/20 transition-colors"
+                  aria-label="Rewind 10 seconds"
+                >
+                  <div className="relative">
+                    <BackTen />
+                  </div>
+                </button>
+
+                <button
+                  onClick={handlePlayPause}
+                  className="bg-red-600 rounded-full p-4 hover:bg-red-700 transition-colors"
+                  aria-label={isPlaying ? "Pause" : "Play"}
+                >
+                  {isPlaying ? (
+                    <Pause className="h-6 w-6" />
+                  ) : (
+                    <Play className="h-6 w-6" />
+                  )}
+                </button>
+
+                <button
+                  onClick={handleForward}
+                  className="bg-white/10 rounded-full p-2 hover:bg-white/20 transition-colors"
+                  aria-label="Forward 10 seconds"
+                >
+                  <div className="relative">
+                    <FrontTen />
+                  </div>
+                </button>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <button
+                  className="bg-white/10 rounded-full p-2 hover:bg-white/20 transition-colors"
+                  aria-label="Share"
+                >
+                  <Share className="h-5 w-5" />
+                </button>
+
+                <button
+                  className="bg-white/10 rounded-full p-2 hover:bg-white/20 transition-colors"
+                  aria-label="Download"
+                >
+                  <Gift className="h-5 w-5" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

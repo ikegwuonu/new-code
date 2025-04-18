@@ -1,6 +1,14 @@
 import axios from "axios";
 import API_ENDPOINT from "./endpoints";
-import { ILatestEpisode, ITopPodcast, ITrendingEpisode } from "../types";
+import {
+  ICategories,
+  IEpisode,
+  IGetOnePodcast,
+  ILatestEpisode,
+  IPodcast,
+  ITopPodcast,
+  ITrendingEpisode,
+} from "../types";
 
 export const client = axios.create({
   baseURL: "https://api.wokpa.app/api/listeners",
@@ -19,7 +27,7 @@ export const getTopPodcasts = async () => {
   return response.data;
 };
 export const getTopCategories = async () => {
-  const response = await client.get(API_ENDPOINT.getTopCategories);
+  const response = await client.get<ICategories>(API_ENDPOINT.getTopCategories);
   return response.data;
 };
 export const getTrendingEpisodes = async () => {
@@ -33,7 +41,9 @@ export const getPodcastSearch = async (search: string) => {
   return response.data;
 };
 export const getPodcast = async (id: string) => {
-  const response = await client.get(API_ENDPOINT.getPodcast(id));
+  const response = await client.get<IGetOnePodcast>(
+    API_ENDPOINT.getPodcast(id)
+  );
   return response.data;
 };
 export const getPodcastEpisodes = async (id: string) => {
@@ -41,7 +51,7 @@ export const getPodcastEpisodes = async (id: string) => {
   return response.data;
 };
 export const getEpisode = async (id: string) => {
-  const response = await client.get(API_ENDPOINT.getEpisode(id));
+  const response = await client.get<IEpisode>(API_ENDPOINT.getEpisode(id));
   return response.data;
 };
 export const getLatestEpisodes = async () => {

@@ -23,10 +23,10 @@ export default function Footer() {
     <div className="bg-[#282828] px-[60px] pt-[29px] pb-[23px]">
       <Image src={"/logo.png"} width={160} height={64} alt="logo" />
       <div className="py-[50px] flex items-center justify-between">
-        <div className="py-[50px] flex items-center text-[#c9c9c9]">
+        <div className="py-[50px] flex flex-wrap items-center text-[#c9c9c9]">
           {links.map((item, i) => (
             <Fragment key={item}>
-              {i > 0 && <span className="px-[30px] text-4xl">|</span>}
+              {i > 0 && <span className="px-[30px] text-4xl pb-3">|</span>}
               <p className="cursor-pointer text-base font-[700] uppercase">
                 {item}
               </p>
@@ -41,9 +41,9 @@ export default function Footer() {
           <Linkedin />
         </div> */}
       </div>
-      <p className="flex gap-8 items-center flex-wrap">
-        <span>.</span> © Copyright 2021. All Rights Reserved.{" "}
-        <span>Terms & conditions</span> <span>Privacy policy</span>
+      <p className="flex gap-8 items-center flex-wrap text-white">
+        © Copyright 2021. All Rights Reserved. <span>Terms & conditions</span>{" "}
+        <span>Privacy policy</span>
       </p>
     </div>
   );

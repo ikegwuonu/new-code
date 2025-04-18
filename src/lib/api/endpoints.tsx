@@ -1,5 +1,5 @@
 const API_ENDPOINT = {
-  getTopPodcasts: "/top-podcasts?page=1&per_page=15",
+  getTopPodcasts: "/top-podcasts?page=1&per_page=55",
   getTopCategories: "/top-categories",
   getTrendingEpisodes: "/popular-and-trending-podcasts?page=1&per_page=15",
 

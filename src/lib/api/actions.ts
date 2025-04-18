@@ -1,5 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { getTopCategories, getTopPodcasts, getTrendingEpisodes } from ".";
+import {
+  getPodcast,
+  getTopCategories,
+  getTopPodcasts,
+  getTrendingEpisodes,
+  getPodcastSearch,
+  getEpisode,
+} from ".";
 import API_ENDPOINT from "./endpoints";
 
 export const useGetTopPodcasts = () => {
@@ -23,13 +30,13 @@ export const useGetTrendingEpisodes = () => {
 export const useGetPodcastSearch = (search: string) => {
   return useQuery({
     queryKey: [API_ENDPOINT.getPodcastSearch(search)],
-    queryFn: getTopPodcasts,
+    queryFn: () => getPodcastSearch(search),
   });
 };
 export const useGetPodcast = (id: string) => {
   return useQuery({
     queryKey: [API_ENDPOINT.getPodcast(id)],
-    queryFn: getTopPodcasts,
+    queryFn: () => getPodcast(id),
   });
 };
 export const useGetPodcastEpisodes = (id: string) => {
@@ -41,7 +48,7 @@ export const useGetPodcastEpisodes = (id: string) => {
 export const useGetEpisode = (id: string) => {
   return useQuery({
     queryKey: [API_ENDPOINT.getEpisode(id)],
-    queryFn: getTopPodcasts,
+    queryFn: () => getEpisode(id),
   });
 };
 export const useGetLatestEpisodes = () => {

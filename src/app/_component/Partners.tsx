@@ -19,7 +19,7 @@ const partner: { src: string; width: number; height: number }[] = [
 ];
 export default function Partners() {
   return (
-    <div className="pt-[146px] pb-[127px] ">
+    <div className="pt-[146px] pb-[127px] app-container">
       <div className="max-w-[1262px] mx-auto">
         <p className="text-center text-[#282828] font-[800] pb-[42px]">
           OUR GLOBAL PARTNERS

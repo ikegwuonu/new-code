@@ -2,53 +2,54 @@
 
 import Image from "next/image";
 import { Play } from "lucide-react";
+import { ITopPodcastData } from "@/lib/types";
+import { formatDate } from "@/lib/utils";
+import Link from "next/link";
 
-interface PodcastEpisodeCardProps {
-  title?: string;
-  episodeNumber?: number;
-  part?: number;
-  guestName?: string;
-  guestTitle?: string;
-  guestImage?: string;
-  date?: string;
-  duration?: string;
-  nextEpisodeTitle?: string;
-  nextEpisodeDate?: string;
-  nextEpisodeDuration?: string;
-  onPlay?: () => void;
-}
-
+type PodcastEpisodeCardProps = {
+  title: string;
+  description: string;
+  created_at: string;
+  picture_url: string;
+  id: string;
+};
 export default function PodcastEpisodeCard({
-  nextEpisodeTitle,
-  nextEpisodeDate,
-  nextEpisodeDuration,
-  onPlay,
+  title,
+  description,
+  created_at,
+  picture_url,
+  id,
 }: PodcastEpisodeCardProps) {
   return (
-    <div className="max-w-md mx-auto">
+    <Link href={`/episode?id=${id}`} className="w-full ">
       {/* Main Episode Card */}
-      <Image src={"/Editor.png"} width={300} height={288} alt="CARD" />
+      <Image
+        src={picture_url}
+        width={300}
+        height={288}
+        alt="CARD"
+        className="h-[288px] w-full"
+      />
 
       {/* Next Episode Section */}
-      {nextEpisodeTitle && (
-        <div className="mt-4 relative">
+      {
+        <div className="pt-4 relative bg-white">
           <button
-            onClick={onPlay}
             className="absolute -left-6 top-1/2 transform -translate-y-1/2 bg-red-600 rounded-full p-3 shadow-lg"
             aria-label="Play episode"
           >
             <Play className="h-5 w-5 text-white" fill="white" />
           </button>
           <div className="pl-10">
-            <h3 className="font-bold text-lg">{nextEpisodeTitle}</h3>
+            <h3 className="font-bold text-lg">{title}</h3>
             <div className="flex text-gray-600 text-sm">
-              <span>{nextEpisodeDate}</span>
-              <span className="mx-2">|</span>
-              <span>{nextEpisodeDuration}</span>
+              <span>{formatDate(created_at)}</span>
+              <span className="px-2">|</span>
+              <span>30 mins</span>
             </div>
           </div>
         </div>
-      )}
-    </div>
+      }
+    </Link>
   );
 }
