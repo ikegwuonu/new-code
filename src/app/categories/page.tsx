@@ -1,6 +1,6 @@
 "use client";
 import { Ellipsis } from "@/components/svg/icon";
-import React from "react";
+import React, { useEffect } from "react";
 import PodcastCard from "./PodcastCard";
 import Image from "next/image";
 import {
@@ -12,9 +12,22 @@ import Pagination from "@/components/ui/Pagination";
 import useTablePageData from "@/lib/hooks/use-table-page-data";
 import usePaginatedData from "@/lib/hooks/use-paginated-data";
 import Skeleton from "react-loading-skeleton";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/lib/store";
+import {
+  filterType,
+  setCategory,
+  setFilter,
+  setPodcast,
+} from "@/lib/store/filterSlice";
+import { ITopPodcastData } from "@/lib/types";
 
 export default function Page() {
-  const { data: categoryData } = useGetTopCategories();
+  const reduxPaginatedData = useSelector(
+    (state: RootState) => state.filterSort
+  );
+  const dispatch = useDispatch<AppDispatch>();
+  const { data: categoryData, isSuccess } = useGetTopCategories();
   const categories = categoryData?.data || [];
   const { data } = useGetPodcastEpisodes("1");
   const [podcastData, setPodcastData] = React.useState([]);
@@ -27,6 +40,13 @@ export default function Page() {
     limit,
     search
   );
+  const categoriesOption =
+    Array.from(
+      new Set(data?.data?.data.flatMap((item) => item.category_type))
+    ) || [];
+  useEffect(() => {
+    dispatch(setPodcast(paginatedData));
+  }, [isSuccess, paginatedData]);
   return (
     <div className="bg-[#fcfcfc] app-container pb-[87px]">
       <div className="mx-auto app-width">
@@ -37,19 +57,41 @@ export default function Page() {
           <div className="flex pb-[33px] gap-8">
             <p className="text-[#5a5a5a] text-base font-[500] flex gap-1">
               Sort by :{" "}
-              <span className="font-[700] text-[#282828]">Popular</span>
-              <Ellipsis />
+              <select
+                multiple
+                onChange={(e) =>
+                  dispatch(setFilter(e.target.value as filterType))
+                }
+              >
+                <option value={"latest"} className="flex gap-1">
+                  <span className="font-[700] text-[#282828]">Popular</span>
+                  <Ellipsis />
+                </option>
+                <option value={"popular"} className="flex gap-1">
+                  <span className="font-[700] text-[#282828]">Popular</span>
+                  <Ellipsis />
+                </option>
+              </select>
             </p>
 
             <p className="w-1.5 text-[#979797]">|</p>
             <p className="text-[#5a5a5a] text-base font-[500] flex gap-1">
               Sort by category :{" "}
-              <span className="font-[700] text-[#282828]">All</span>
-              <Ellipsis />
+              <select
+                multiple
+                onChange={(e) => dispatch(setCategory(e.target.value))}
+              >
+                {categoriesOption.map((item) => (
+                  <option value={item} key={item} className="flex gap-1">
+                    <span className="font-[700] text-[#282828]">{item}</span>
+                    <Ellipsis />
+                  </option>
+                ))}
+              </select>
             </p>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-2 gap-10 pb-[77px]">
-            {paginatedData?.map((podcast, i) => (
+            {reduxPaginatedData?.map((podcast, i) => (
               <PodcastCard key={i} podcast={podcast} />
             ))}
           </div>
