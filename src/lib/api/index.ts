@@ -5,7 +5,6 @@ import {
   IEpisode,
   IGetOnePodcast,
   ILatestEpisode,
-  IPodcast,
   ITopPodcast,
   ITrendingEpisode,
 } from "../types";

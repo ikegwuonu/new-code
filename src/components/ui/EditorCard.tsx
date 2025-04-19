@@ -2,7 +2,6 @@ import Image from "next/image";
 import Play from "./Play";
 import React from "react";
 import Link from "next/link";
-import { ITopPodcast, ITopPodcastData } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
 
 type EditorCardProps = {

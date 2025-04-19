@@ -1,4 +1,5 @@
 "use client";
+import { handleApiError } from "@/lib/utils";
 import {
   QueryCache,
   QueryClient,
@@ -11,7 +12,10 @@ export default function ReactQuery({ children }: React.PropsWithChildren) {
   const [queryClient] = useState(
     new QueryClient({
       queryCache: new QueryCache({
-        onError: (error: Error) => {},
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onError: (error: any) => {
+          handleApiError(error);
+        },
       }),
       defaultOptions: { queries: { refetchOnWindowFocus: false } },
     })

@@ -34,7 +34,6 @@ export interface ITopPodcastData {
     updated_at: string;
   };
 }
-[];
 export interface ElementsVisibility {
   like: boolean;
   logo: boolean;

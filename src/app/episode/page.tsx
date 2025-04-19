@@ -16,16 +16,20 @@ export default function Page() {
             Next Episodes in queue
           </p>
           <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-10 pt-[31px]">
-            {episodes?.slice(0, 3).map((episode, i) => (
-              <PodcastEpisodeCard
-                id={String(episode.id)}
-                description={episode.description}
-                picture_url={episode.picture_url}
-                title={episode.title}
-                created_at={episode.created_at}
-                key={i}
-              />
-            ))}
+            {episodes &&
+              episodes?.length > 0 &&
+              episodes
+                ?.slice(0, 3)
+                .map((episode, i) => (
+                  <PodcastEpisodeCard
+                    id={String(episode.id)}
+                    description={episode.description}
+                    picture_url={episode.picture_url}
+                    title={episode.title}
+                    created_at={episode.created_at}
+                    key={i}
+                  />
+                ))}
           </div>
         </div>
       </div>

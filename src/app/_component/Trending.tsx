@@ -1,5 +1,4 @@
 "use client";
-import Play from "@/components/ui/Play";
 import CustomSwiper from "@/components/ui/Swiper";
 import Title from "@/components/ui/Title";
 import { useGetTrendingEpisodes } from "@/lib/api/actions";
@@ -22,7 +21,8 @@ export default function Trending() {
           {!isSuccess ? (
             <Skeleton count={4} width={288} height={424} />
           ) : (
-            trendingData && (
+            trendingData &&
+            trendingData.length > 0 && (
               <CustomSwiper
                 numberOfSlides={4}
                 slide={trendingData?.map((item, i) => (

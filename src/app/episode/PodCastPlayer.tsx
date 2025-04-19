@@ -3,15 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  Rewind,
-  Play,
-  FastForward,
-  Share2,
-  Download,
-  Pause,
-} from "lucide-react";
+import { ArrowLeft, Play, Pause } from "lucide-react";
 import { Slider } from "@/components/ui/Slider";
 import { useGetEpisode } from "@/lib/api/actions";
 import { useSearchParams } from "next/navigation";
@@ -26,7 +18,7 @@ export default function PodcastPlayer() {
   const id = useSearchParams().get("id");
   const { data, isSuccess } = useGetEpisode(id || "1");
   const episode = data?.data;
-  const [duration, setDuration] = useState(episode?.duration || 28 * 60 + 4); // 28:04 in seconds
+  const [duration] = useState(episode?.duration || 28 * 60 + 4); // 28:04 in seconds
 
   const formatTime = (timeInSeconds: number) => {
     const minutes = Math.floor(timeInSeconds / 60);

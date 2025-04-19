@@ -1,4 +1,4 @@
-import { Dot, Gift, Share } from "@/components/svg/icon";
+import { Gift, Share } from "@/components/svg/icon";
 import { ITopPodcastData } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
 import Image from "next/image";

@@ -6,7 +6,6 @@ const remoteProtocol = [
   "d1sfpqaoey1aeo.cloudfront.net",
   "s3.amazonaws.com",
   "wokpa.s3.amazonaws.com",
-  "",
 ];
 
 const nextConfig: NextConfig = {
@@ -27,12 +26,12 @@ const nextConfig: NextConfig = {
     })),
   },
 
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  // typescript: {
+  //   ignoreBuildErrors: true,
+  // },
+  // eslint: {
+  //   ignoreDuringBuilds: true,
+  // },
 };
 
 export default nextConfig;

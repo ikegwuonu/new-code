@@ -5,7 +5,6 @@ import Title from "@/components/ui/Title";
 import { useGetTopPodcasts } from "@/lib/api/actions";
 import { ITopPodcastData } from "@/lib/types";
 import Image from "next/image";
-import { it } from "node:test";
 import React from "react";
 
 const ads: string[] = ["/Ads3", "/Ads4", "/Ads5"];
@@ -16,34 +15,39 @@ export default function Listen() {
     Array.from(
       new Set(data?.data?.data.flatMap((item) => item.category_type))
     ) || [];
-  console.log(categories);
+  //console.log(categories);
 
   return (
     <div className="pt-[114px] bg-[#fcfcfc] app-container">
-      <div className="app-width mx-auto pb-[150px]">
-        <p className="text-[#282828] py-[17px] px-[29px] text-2xl font-[800] bg-[#F0E4FF] rounded-[3px]">
-          LISTEN BY ABR CATEGORIES
-        </p>
-        {categoryData && <Category title={categories[0]} data={categoryData} />}
-        <div className="pt-[100px] gap-4 flex-col md:flex-row items-center md:gap-[71px] max-w-[992px] flex mx-auto">
-          {ads.map((item) => (
-            <Image
-              src={`${item}.png`}
-              width={285}
-              height={255}
-              alt="ads"
-              key={item}
-            />
-          ))}
+      {isSuccess && (
+        <div className="app-width mx-auto pb-[150px]">
+          <p className="text-[#282828] py-[17px] px-[29px] text-2xl font-[800] bg-[#F0E4FF] rounded-[3px]">
+            LISTEN BY ABR CATEGORIES
+          </p>
+          {categoryData && (
+            <Category title={categories[0]} data={categoryData} />
+          )}
+          <div className="pt-[100px] gap-4 flex-col md:flex-row items-center md:gap-[71px] max-w-[992px] flex mx-auto">
+            {ads.length > 0 &&
+              ads.map((item) => (
+                <Image
+                  src={`${item}.png`}
+                  width={285}
+                  height={255}
+                  alt="ads"
+                  key={item}
+                />
+              ))}
+          </div>
+          {categoryData && (
+            <>
+              <Category title={categories[4]} data={categoryData} />
+              <Category title={categories[2]} data={categoryData} />
+              <Category title={categories[3]} data={categoryData} />
+            </>
+          )}
         </div>
-        {categoryData && (
-          <>
-            <Category title={categories[4]} data={categoryData} />
-            <Category title={categories[2]} data={categoryData} />
-            <Category title={categories[3]} data={categoryData} />
-          </>
-        )}
-      </div>
+      )}
     </div>
   );
 }
@@ -64,12 +68,14 @@ const Category = ({ title, data }: CategoryProps) => {
         </button>
       </div>
       <div className="">
-        <CustomSwiper
-          numberOfSlides={4}
-          slide={categoryType?.map((item, i) => (
-            <News key={i} item={item} />
-          ))}
-        />
+        {categoryType.length > 0 && (
+          <CustomSwiper
+            numberOfSlides={4}
+            slide={categoryType?.map((item, i) => (
+              <News key={i} item={item} />
+            ))}
+          />
+        )}
       </div>
     </>
   );

@@ -1,15 +1,6 @@
 // features/filterSort/filterSortSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ITopPodcast, ITopPodcastData } from "../types";
-
-interface FilterSortState {
-  sortBy: "price_asc" | "price_desc" | "name_asc" | "name_desc";
-  filters: {
-    category: string[];
-    priceRange: [number, number];
-    inStock: boolean;
-  };
-}
+import { ITopPodcastData } from "../types";
 
 const initialState: ITopPodcastData[] = [
   {

@@ -1,5 +1,4 @@
 import React from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { MoveLeft, MoveRight } from "../svg/icon";
 
 interface PaginationProps {
@@ -61,8 +60,6 @@ const Pagination: React.FC<PaginationProps> = ({
     "bg-[#2c2c2c] text-white rounded-lg text-[13px] cursor-pointer";
   const inactiveButtonStyles =
     "text-black bg-[#AEAEAE]  hover:bg-gray-100 cursor-pointer";
-  const disabledButtonStyles =
-    "text-gray-300 cursor-not-allowed hover:bg-transparent";
 
   return (
     <nav
@@ -92,33 +89,34 @@ const Pagination: React.FC<PaginationProps> = ({
         <ChevronLeft size={20} />
       </button> */}
 
-      {pages.map((pageNumber, idx) => {
-        if (pageNumber === -1) {
-          return (
-            <span
-              key={`ellipsis-${idx}`}
-              className="px-4 h-10 flex items-center justify-center text-gray-500"
-            >
-              ...
-            </span>
-          );
-        }
+      {pages.length > 0 &&
+        pages.map((pageNumber, idx) => {
+          if (pageNumber === -1) {
+            return (
+              <span
+                key={`ellipsis-${idx}`}
+                className="px-4 h-10 flex items-center justify-center text-gray-500"
+              >
+                ...
+              </span>
+            );
+          }
 
-        return (
-          <button
-            key={pageNumber}
-            onClick={() => onPageChange(pageNumber)}
-            className={`${baseButtonStyles} ${
-              pageNumber === currentPage
-                ? activeButtonStyles
-                : inactiveButtonStyles
-            }`}
-            aria-current={pageNumber === currentPage ? "page" : undefined}
-          >
-            {pageNumber}
-          </button>
-        );
-      })}
+          return (
+            <button
+              key={pageNumber}
+              onClick={() => onPageChange(pageNumber)}
+              className={`${baseButtonStyles} ${
+                pageNumber === currentPage
+                  ? activeButtonStyles
+                  : inactiveButtonStyles
+              }`}
+              aria-current={pageNumber === currentPage ? "page" : undefined}
+            >
+              {pageNumber}
+            </button>
+          );
+        })}
 
       <button
         onClick={() =>

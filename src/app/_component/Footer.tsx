@@ -1,10 +1,10 @@
-import {
-  Facebook,
-  Instagram,
-  Linkedin,
-  Locator,
-  Twitter,
-} from "@/components/svg";
+// import {
+//   Facebook,
+//   Instagram,
+//   Linkedin,
+//   Locator,
+//   Twitter,
+// } from "@/components/svg";
 import Image from "next/image";
 import React, { Fragment } from "react";
 const links = [

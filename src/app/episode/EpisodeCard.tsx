@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { Play } from "lucide-react";
-import { ITopPodcastData } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 
@@ -15,7 +14,7 @@ type PodcastEpisodeCardProps = {
 };
 export default function PodcastEpisodeCard({
   title,
-  description,
+
   created_at,
   picture_url,
   id,

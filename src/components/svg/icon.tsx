@@ -191,6 +191,7 @@ export const Share2 = (props: React.SVGProps<SVGSVGElement>) => (
 );
 export const Share = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
+    {...props}
     width="30"
     height="30"
     viewBox="0 0 30 30"
@@ -241,6 +242,7 @@ export const Gift2 = (props: React.SVGProps<SVGSVGElement>) => (
 );
 export const Gift = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
+    {...props}
     width="30"
     height="30"
     viewBox="0 0 30 30"
@@ -280,6 +282,7 @@ export const ArrowLeft = (props: React.SVGProps<SVGSVGElement>) => (
 );
 export const Warning = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
+    {...props}
     width="18"
     height="18"
     viewBox="0 0 18 18"
@@ -319,6 +322,7 @@ export const Warning = (props: React.SVGProps<SVGSVGElement>) => (
 );
 export const FileIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
+    {...props}
     width="40"
     height="40"
     viewBox="0 0 40 40"
@@ -341,6 +345,7 @@ export const FileIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 export const Ellipsis = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
+    {...props}
     width="30"
     height="30"
     viewBox="0 0 30 30"

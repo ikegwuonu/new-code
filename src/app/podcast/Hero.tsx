@@ -1,5 +1,5 @@
 "use client";
-import { Color, Music, Spotify, Wokpa } from "@/components/svg";
+//import { Color, Music, Spotify, Wokpa } from "@/components/svg";
 import { Share } from "@/components/svg/icon";
 import { useGetPodcast } from "@/lib/api/actions";
 import Image from "next/image";

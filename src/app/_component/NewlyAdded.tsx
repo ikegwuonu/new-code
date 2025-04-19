@@ -1,5 +1,5 @@
 "use client";
-import { Dot, Gift, Share } from "@/components/svg/icon";
+import { Gift, Share } from "@/components/svg/icon";
 import CustomSwiper from "@/components/ui/Swiper";
 import { useGetLatestEpisodes } from "@/lib/api/actions";
 import { ITopPodcastData } from "@/lib/types";
@@ -21,7 +21,7 @@ export default function NewlyAdded() {
           <Skeleton height={250} width={300} count={2} />
         ) : (
           <div className=" pt-[31px]">
-            {latestEpisodes && (
+            {latestEpisodes && latestEpisodes.length > 0 && (
               <CustomSwiper
                 numberOfSlides={4}
                 slide={latestEpisodes?.map((item, i) => (

@@ -3,11 +3,7 @@ import { Ellipsis } from "@/components/svg/icon";
 import React, { useEffect } from "react";
 import PodcastCard from "./PodcastCard";
 import Image from "next/image";
-import {
-  useGetPodcast,
-  useGetPodcastEpisodes,
-  useGetTopCategories,
-} from "@/lib/api/actions";
+import { useGetPodcastEpisodes, useGetTopCategories } from "@/lib/api/actions";
 import Pagination from "@/components/ui/Pagination";
 import useTablePageData from "@/lib/hooks/use-table-page-data";
 import usePaginatedData from "@/lib/hooks/use-paginated-data";
@@ -20,7 +16,6 @@ import {
   setFilter,
   setPodcast,
 } from "@/lib/store/filterSlice";
-import { ITopPodcastData } from "@/lib/types";
 
 export default function Page() {
   const reduxPaginatedData = useSelector(
@@ -29,8 +24,8 @@ export default function Page() {
   const dispatch = useDispatch<AppDispatch>();
   const { data: categoryData, isSuccess } = useGetTopCategories();
   const categories = categoryData?.data || [];
-  const { data } = useGetPodcastEpisodes("1");
-  const [podcastData, setPodcastData] = React.useState([]);
+  const { isSuccess: isEpisodeSuccess, data } = useGetPodcastEpisodes("1");
+
   const podcasts = data?.data?.data || [];
   const { limit, page, search, setPage } = useTablePageData();
   const totalPages = Math.ceil(podcasts?.length / limit);
@@ -81,19 +76,22 @@ export default function Page() {
                 multiple
                 onChange={(e) => dispatch(setCategory(e.target.value))}
               >
-                {categoriesOption.map((item) => (
-                  <option value={item} key={item} className="flex gap-1">
-                    <span className="font-[700] text-[#282828]">{item}</span>
-                    <Ellipsis />
-                  </option>
-                ))}
+                {isEpisodeSuccess &&
+                  categoriesOption.length > 0 &&
+                  categoriesOption.map((item) => (
+                    <option value={item} key={item} className="flex gap-1">
+                      <span className="font-[700] text-[#282828]">{item}</span>
+                      <Ellipsis />
+                    </option>
+                  ))}
               </select>
             </p>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-2 gap-10 pb-[77px]">
-            {reduxPaginatedData?.map((podcast, i) => (
-              <PodcastCard key={i} podcast={podcast} />
-            ))}
+            {reduxPaginatedData.length > 0 &&
+              reduxPaginatedData?.map((podcast, i) => (
+                <PodcastCard key={i} podcast={podcast} />
+              ))}
           </div>
           <Pagination
             currentPage={page}
@@ -108,6 +106,7 @@ export default function Page() {
           </p>
           <div className=" grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-[30px] ">
             {categories ? (
+              categories.length > 0 &&
               categories.slice(0, 4).map((category, i) => (
                 <div className="relative h-full" key={i}>
                   <Image

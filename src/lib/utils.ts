@@ -3,12 +3,14 @@ import { toast } from "sonner";
 export const showerror = (message: string) => {
   return toast.error(message, {
     duration: 1200,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onDismiss: (toast: any) => toast.dismiss(),
   });
 };
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const handleApiError = (error: any) => {
-  const err = error?.response?.data?.errors as any[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // const err = error?.response?.data?.errors as any[];
   if (!navigator.onLine) {
     return showerror("No internet connection.");
   }
