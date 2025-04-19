@@ -5,6 +5,7 @@ import { useGetLatestEpisodes } from "@/lib/api/actions";
 import { ITopPodcastData } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 
@@ -38,7 +39,7 @@ export default function NewlyAdded() {
 
 const NewlyAddedCards = ({ item }: { item: ITopPodcastData }) => {
   return (
-    <div className=" h-full ">
+    <Link href={`/podcast?id=${item.id}`} className=" h-full ">
       <Image
         src={item.picture_url}
         width={223}
@@ -60,6 +61,6 @@ const NewlyAddedCards = ({ item }: { item: ITopPodcastData }) => {
           <Gift />
         </div>
       </div>
-    </div>
+    </Link>
   );
 };

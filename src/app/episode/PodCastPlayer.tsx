@@ -108,6 +108,7 @@ export default function PodcastPlayer() {
           <div className="flex flex-col md:flex-row gap-6 mb-12">
             <div className="flex-shrink-0">
               <Image
+                priority
                 src={episode.picture_url}
                 alt="Hope Window Podcast"
                 width={200}

@@ -5,6 +5,7 @@ import Play from "@/components/ui/Play";
 import Title from "@/components/ui/Title";
 import { useGetTopPodcasts } from "@/lib/api/actions";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 
@@ -28,7 +29,10 @@ export default function EditorPick() {
           ) : (
             data && (
               <>
-                <div className="relative h-full">
+                <Link
+                  href={`/podcast?id=${data?.data?.data[0]?.id}`}
+                  className="relative h-full"
+                >
                   <Image
                     src={data?.data?.data[0]?.picture_url}
                     width={670}
@@ -42,12 +46,13 @@ export default function EditorPick() {
                       {data?.data?.data[0]?.title}
                     </p>
                   </div>
-                </div>
+                </Link>
                 <div className="h-full ">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-[23px]">
                     {Array.from({ length: 2 }).map((item, index) => (
                       <EditorCard
                         key={index}
+                        id={data?.data?.data[1 + index]?.id}
                         picture_url={data?.data?.data[1 + index]?.picture_url}
                         title={data?.data?.data[1 + index]?.title}
                         created_at={data?.data?.data[1 + index]?.created_at}

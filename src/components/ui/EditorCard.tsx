@@ -8,15 +8,17 @@ type EditorCardProps = {
   picture_url: string;
   title: string;
   created_at: string;
+  id?: string | number;
 };
 
 export default function EditorCard({
   picture_url,
   title,
   created_at,
+  id,
 }: EditorCardProps) {
   return (
-    <Link href="#">
+    <Link href={`/podcast?id=${id}`}>
       <Image
         src={picture_url}
         alt="Card"

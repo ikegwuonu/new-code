@@ -5,6 +5,7 @@ import Title from "@/components/ui/Title";
 import { useGetTopPodcasts } from "@/lib/api/actions";
 import { ITopPodcastData } from "@/lib/types";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const ads: string[] = ["/Ads3", "/Ads4", "/Ads5"];
@@ -82,21 +83,23 @@ const Category = ({ title, data }: CategoryProps) => {
 };
 const News = ({ item }: { item: ITopPodcastData }) => {
   return (
-    <div className="bg-[#f4f4f4]  border-b-[5px] border-[#d5d3d3] py-[23px] px-[21px] rounded-[5px]">
-      <Image
-        src={item?.picture_url}
-        width={223}
-        height={234}
-        alt="news"
-        className="w-full"
-      />
-      <p className="text-[#282828] text-[18px] font-[700] pt-[17px] pb-[14px]">
-        {item?.title}
-      </p>
-      <div className="flex gap-[11px]">
-        <Share />
-        <Gift />
+    <Link href={`/episode?id=${item.id}`}>
+      <div className="bg-[#f4f4f4]  border-b-[5px] border-[#d5d3d3] py-[23px] px-[21px] rounded-[5px]">
+        <Image
+          src={item?.picture_url}
+          width={223}
+          height={234}
+          alt="news"
+          className="w-full"
+        />
+        <p className="text-[#282828] text-[18px] font-[700] pt-[17px] pb-[14px]">
+          {item?.title}
+        </p>
+        <div className="flex gap-[11px]">
+          <Share />
+          <Gift />
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
