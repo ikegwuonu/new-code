@@ -18,7 +18,7 @@ export default function NewlyAdded() {
           Newly Added Episodes
         </p>
         {!isSuccess ? (
-          <Skeleton height={250} width={300} count={2} />
+          <Skeleton height={300} className="w-full" />
         ) : (
           <div className=" pt-[31px]">
             {latestEpisodes && latestEpisodes.length > 0 && (

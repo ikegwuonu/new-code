@@ -21,7 +21,10 @@ export default function EditorPick() {
         <Title text="Featured Episodes" />
         <div className="grid md:grid-cols-2 grid-cols-1 pt-[18px] gap-8">
           {!isSuccess ? (
-            <Skeleton count={2} width={300} height={200} />
+            <>
+              <Skeleton height={300} className="w-full" />
+              <Skeleton height={300} className="w-full" />
+            </>
           ) : (
             data && (
               <>
@@ -33,14 +36,14 @@ export default function EditorPick() {
                     alt="Editor"
                     className="h-[561px] w-[670px]"
                   />
-                  <div className="py-3 px-[25px] flex gap-4 absolute items-center left-0 bottom-0 bg-black opacity-50">
+                  <div className="py-3 w-full px-[25px] flex gap-4 absolute items-center left-0 bottom-0 bg-black opacity-50">
                     <Play />
                     <p className="text-white text-2xl font-[800]">
                       {data?.data?.data[0]?.title}
                     </p>
                   </div>
                 </div>
-                <div className="">
+                <div className="h-full ">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-[23px]">
                     {Array.from({ length: 2 }).map((item, index) => (
                       <EditorCard
@@ -55,7 +58,7 @@ export default function EditorPick() {
                     width={634}
                     height={114}
                     image="/Ads2.png"
-                    className="mt-auto"
+                    className=" mb-auto "
                   />
                 </div>
               </>

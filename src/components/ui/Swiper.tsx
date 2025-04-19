@@ -7,6 +7,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/grid";
+import { MoveLeft, MoveRight } from "../svg/icon";
 
 const CustomSwiper = ({
   slide,
@@ -50,11 +51,15 @@ const CustomSwiper = ({
       </Swiper>
 
       {/* Navigation arrows */}
-      <div className="z-10 flex items-center explore-button-prev shadow-md absolute left-0 top-1/2 transform -translate-y-1/2 p-2 bg-white rounded-full cursor-pointer !w-[46px] !h-[46px]">
+      {/* <div className="z-10 flex items-center  shadow-md absolute left-0 top-1/2 transform -translate-y-1/2 p-2 bg-white rounded-full cursor-pointer !w-[46px] !h-[46px]">
         <ArrowLeft className="!w-6 !h-6" />
-      </div>
-      <div className="z-10 flex items-center shadow-md explore-button-next absolute right-0 top-1/2 transform -translate-y-1/2 p-2 bg-white rounded-full cursor-pointer !w-[46px] !h-[46px]">
-        <ArrowRight className="!w-6 !h-6" />
+      </div> */}
+      <div
+        className="z-10 flex items-center shadow-md  absolute right-0 top-1/2 transform -translate-y-1/2 py-[14px] px-[11px] rounded-xl bg-white 
+       cursor-pointer !h-11 gap-5"
+      >
+        <MoveRight className=" explore-button-prev" />
+        <MoveLeft className=" explore-button-next" />
       </div>
     </div>
   );

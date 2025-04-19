@@ -19,7 +19,7 @@ export default function Trending() {
         <Title text=" Featured Podcasts" />
         <div className=" pt-[31px]">
           {!isSuccess ? (
-            <Skeleton count={4} width={288} height={424} />
+            <Skeleton height={300} className="w-full" />
           ) : (
             trendingData &&
             trendingData.length > 0 && (

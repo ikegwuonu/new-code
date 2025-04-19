@@ -13,7 +13,7 @@ export default function PodcastCard({ podcast }: { podcast: ITopPodcastData }) {
           width={223}
           height={187}
           alt="Card"
-          src={podcast?.picture_url}
+          src={podcast?.picture_url || "/Editor.png"}
           className="h-[187px] w-full"
         />
         <p className="text-[18px] text-[#282828] font-[700] pt-[13px] pb-[18px]">
@@ -25,7 +25,8 @@ export default function PodcastCard({ podcast }: { podcast: ITopPodcastData }) {
           {podcast.title}
         </p>
         <p className="text-[#828282] text-[13px] font-[500] flex pt-1 pb-3 uppercase">
-          {formatDate(podcast.created_at)}
+          {/* {formatDate(podcast.updated_at)} */}
+          SEPT 23, 2023
           <span>•</span>
           <span>35 MINS</span>
         </p>

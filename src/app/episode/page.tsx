@@ -3,6 +3,7 @@ import React from "react";
 import PodcastPlayer from "./PodCastPlayer";
 import PodcastEpisodeCard from "./EpisodeCard";
 import { useGetLatestEpisodes } from "@/lib/api/actions";
+import Skeleton from "react-loading-skeleton";
 
 export default function Page() {
   const { data } = useGetLatestEpisodes();
@@ -16,8 +17,7 @@ export default function Page() {
             Next Episodes in queue
           </p>
           <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-10 pt-[31px]">
-            {episodes &&
-              episodes?.length > 0 &&
+            {episodes && episodes?.length > 0 ? (
               episodes
                 ?.slice(0, 3)
                 .map((episode, i) => (
@@ -29,7 +29,15 @@ export default function Page() {
                     created_at={episode.created_at}
                     key={i}
                   />
-                ))}
+                ))
+            ) : (
+              <>
+                <Skeleton height={300} className="w-full" />
+                <Skeleton height={300} className="w-full" />
+                <Skeleton height={300} className="w-full" />
+                <Skeleton height={300} className="w-full" />
+              </>
+            )}
           </div>
         </div>
       </div>
