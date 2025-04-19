@@ -1,5 +1,5 @@
 "use client";
-import { Ellipsis } from "@/components/svg/icon";
+//import { Ellipsis } from "@/components/svg/icon";
 import React, { useEffect } from "react";
 import PodcastCard from "./PodcastCard";
 import Image from "next/image";
@@ -22,7 +22,7 @@ export default function Page() {
     (state: RootState) => state.filterSort
   );
   const dispatch = useDispatch<AppDispatch>();
-  const { data: categoryData, isSuccess } = useGetTopCategories();
+  const { data: categoryData } = useGetTopCategories();
   const categories = categoryData?.data || [];
   const { isSuccess: isEpisodeSuccess, data } = useGetPodcastEpisodes("1");
 

@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Grid, Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
