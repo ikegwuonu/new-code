@@ -7,18 +7,18 @@ import { ArrowLeft, Play, Pause } from "lucide-react";
 import { Slider } from "@/components/ui/Slider";
 import { useGetEpisode } from "@/lib/api/actions";
 import { useSearchParams } from "next/navigation";
-import { formatDate } from "@/lib/utils";
+import { convertSecToMin, formatDate } from "@/lib/utils";
 import { BackTen, FrontTen, Gift, Share } from "@/components/svg/icon";
 
 export default function PodcastPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(15); // Starting at 15 seconds as shown in the image
+  const [currentTime, setCurrentTime] = useState(15);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const id = useSearchParams().get("id");
   const { data, isSuccess } = useGetEpisode(id || "1");
   const episode = data?.data;
-  const [duration] = useState(episode?.duration || 28 * 60 + 4); // 28:04 in seconds
+  const [duration, setDuration] = useState(episode?.duration ?? 28 * 60 + 4); // 28:04 in seconds
 
   const formatTime = (timeInSeconds: number) => {
     const minutes = Math.floor(timeInSeconds / 60);
@@ -87,7 +87,9 @@ export default function PodcastPlayer() {
       }
     };
   }, []);
-
+  useEffect(() => {
+    if (episode) setDuration(episode.duration);
+  }, [isSuccess]);
   return (
     <div className="app-container bg-gradient-to-br from-[#2B3221] to-[#f2f2f2]  pt-8 pb-[67px] ">
       {isSuccess && episode && (
@@ -95,7 +97,6 @@ export default function PodcastPlayer() {
           {/* Hidden audio element */}
           <audio ref={audioRef} src={episode.content_url} />
 
-          {/* Back button */}
           <Link
             href="/podcast"
             className="inline-flex items-center mb-8 hover:underline"
@@ -104,7 +105,6 @@ export default function PodcastPlayer() {
             Back to podcast
           </Link>
 
-          {/* Podcast info */}
           <div className="flex flex-col md:flex-row gap-6 mb-12">
             <div className="flex-shrink-0">
               <Image
@@ -121,7 +121,7 @@ export default function PodcastPlayer() {
               <div className="flex flex-wrap gap-x-4 gap-y-1 mb-3 text-sm text-gray-300 uppercase">
                 <span> {formatDate(episode.created_at)}</span>
                 <span className="flex items-center before:content-['•'] before:mx-2 uppercase">
-                  {episode.duration} MINS
+                  {convertSecToMin(episode.duration)} MINS
                 </span>
               </div>
 
@@ -139,9 +139,7 @@ export default function PodcastPlayer() {
             </div>
           </div>
 
-          {/* Audio player controls */}
           <div className="max-w-4xl mx-auto">
-            {/* Progress bar */}
             <div className="flex items-center gap-3 mb-6">
               <span className="text-sm w-10">{formatTime(currentTime)}</span>
               <Slider

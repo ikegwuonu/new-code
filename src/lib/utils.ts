@@ -37,3 +37,9 @@ export const formatDate = (dateString: string): string => {
 
   return new Intl.DateTimeFormat("en-US", options).format(date);
 };
+export const convertSecToMin = (val: number) => {
+  const min = Math.floor(val / 60);
+
+  const sec = (val % 60).toString().padStart(2, "0");
+  return min + ":" + sec;
+};

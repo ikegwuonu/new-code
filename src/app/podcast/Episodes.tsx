@@ -16,7 +16,7 @@ export default function Episodes() {
   const limit = 5;
   const { data, isSuccess } = useGetTopPodcasts();
   const podcast = data?.data?.data || [];
-  const { page, setPage, setLimit } = useTablePageData();
+  const { page, setPage } = useTablePageData();
   //const totalPages = Math.ceil(podcast?.length / 5);
   const { data: paginatedData, pages: totalPages } = usePaginatedData(
     podcast,
