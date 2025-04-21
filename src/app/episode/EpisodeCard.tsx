@@ -20,7 +20,7 @@ export default function PodcastEpisodeCard({
   id,
 }: PodcastEpisodeCardProps) {
   return (
-    <Link href={`/episode?id=${id}`} className="w-full ">
+    <Link href={`/podcast?id=${id}`} className="w-full ">
       {/* Main Episode Card */}
       <Image
         src={picture_url}

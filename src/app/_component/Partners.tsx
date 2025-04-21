@@ -32,7 +32,7 @@ export default function Partners() {
               width={item.width}
               height={item.height}
               src={`/partners/${item.src}.png`}
-              className=""
+              className="grayscale"
             />
           ))}
         </div>
