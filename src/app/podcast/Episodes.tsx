@@ -3,6 +3,7 @@ import { FileIcon, Gift2, Share2 } from "@/components/svg/icon";
 import Ads from "@/components/ui/Ads";
 import Pagination from "@/components/ui/Pagination";
 import { useGetTopPodcasts } from "@/lib/api/actions";
+import usePaginatedData from "@/lib/hooks/use-paginated-data";
 //import usePaginatedData from "@/lib/hooks/use-paginated-data";
 import useTablePageData from "@/lib/hooks/use-table-page-data";
 import { formatDate } from "@/lib/utils";
@@ -12,11 +13,16 @@ import React from "react";
 import Skeleton from "react-loading-skeleton";
 
 export default function Episodes() {
+  const limit = 5;
   const { data, isSuccess } = useGetTopPodcasts();
   const podcast = data?.data?.data || [];
-  const { limit, page, setPage } = useTablePageData();
-  const totalPages = Math.ceil(podcast?.length / limit);
-  // const { data: paginatedData } = usePaginatedData(podcast, page, 3, search);
+  const { page, setPage, setLimit } = useTablePageData();
+  //const totalPages = Math.ceil(podcast?.length / 5);
+  const { data: paginatedData, pages: totalPages } = usePaginatedData(
+    podcast,
+    page,
+    limit
+  );
   return (
     <div className="pt-[56px] pb-[174px] app-container">
       <div className="mx-auto app-width grid md:grid-cols-4 grid-cols-3 justify-between xl:gap-[163px] gap-5 ">
@@ -33,9 +39,9 @@ export default function Episodes() {
                 </span>
               </p>
               <div className="pb-10">
-                {podcast &&
-                  podcast.length > 0 &&
-                  podcast?.slice(0, 5).map((item, i) => (
+                {paginatedData &&
+                  paginatedData.length > 0 &&
+                  paginatedData?.map((item, i) => (
                     <Link href={`/podcast?id=${item.id}`} key={i}>
                       <div className="pl-4 pt-[26px] pr-[26px] pb-[38px] border-b border-[#dcdcdc] flex gap-[18px] flex-col sm:flex-row ">
                         <Image
@@ -54,7 +60,7 @@ export default function Episodes() {
                           <p className="text-[#787878] text-xl font-[700] pt-[1px] pb-[7px]">
                             {item.title}
                           </p>
-                          <p className="text-[15px] text-[#282828] font-[500]">
+                          <p className="text-[15px] text-[#282828] font-[500] ">
                             {item.description}
                           </p>
                           <div className="mt-4 flex gap-[21px] h-10 overflow-hidden">

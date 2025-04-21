@@ -43,7 +43,7 @@ const CustomSwiper = ({
         spaceBetween={30}
       >
         {slide.map((item, i) => (
-          <SwiperSlide key={i} className="min-w-[140px] grid">
+          <SwiperSlide key={i} className="min-w-[140px] grid h-full">
             {item}
           </SwiperSlide>
         ))}

@@ -2,38 +2,43 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ITopPodcastData } from "../types";
 
-export type filterType = "popular" | "latest";
+export type filterType = "popular" | "latest" | "all";
 
-const initialState: ITopPodcastData[] = [];
+const initialState: {
+  allPodcasts: ITopPodcastData[];
+  filteredPodcast: ITopPodcastData[];
+} = {
+  allPodcasts: [],
+  filteredPodcast: [],
+};
 
 const filterSortSlice = createSlice({
   name: "filterSort",
   initialState,
   reducers: {
     setPodcast: (state, action: PayloadAction<ITopPodcastData[]>) => {
-      // Proper array mutation with Immer
-      state.splice(0, state.length, ...action.payload);
+      state.allPodcasts = action.payload;
     },
     setFilter: (state, action: PayloadAction<filterType>) => {
-      // Create a copy before sorting to avoid mutating original array
-      const sorted = [...state].sort((a, b) => {
+      const sorted = [...state.allPodcasts].sort((a, b) => {
         if (action.payload === "popular") {
           return b.subscriber_count - a.subscriber_count;
         }
-        return (
-          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-        );
+        if (action.payload === "latest") {
+          return (
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          );
+        }
+        return 0;
       });
-
-      // Replace state contents with sorted array
-      state.splice(0, state.length, ...sorted);
+      state.filteredPodcast = sorted.length ? [...sorted] : state.allPodcasts;
     },
     setCategory: (state, action: PayloadAction<string>) => {
-      const filtered = state.filter(
+      const filtered = state.allPodcasts.filter(
         (podcast) =>
           podcast.category_type.toLowerCase() == action.payload.toLowerCase()
       );
-      state.splice(0, state.length, ...filtered);
+      state.filteredPodcast = [...filtered];
     },
   },
 });

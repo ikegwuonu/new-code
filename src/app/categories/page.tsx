@@ -18,9 +18,9 @@ import {
 } from "@/lib/store/filterSlice";
 
 export default function Page() {
-  const reduxPaginatedData = useSelector(
+  const reduxData = useSelector(
     (state: RootState) => state.filterSort
-  );
+  ).filteredPodcast;
   const dispatch = useDispatch<AppDispatch>();
   const { data: categoryData } = useGetTopCategories();
   const categories = categoryData?.data || [];
@@ -28,9 +28,9 @@ export default function Page() {
 
   const podcasts = data?.data?.data || [];
   const { limit, page, search, setPage } = useTablePageData();
-  const totalPages = Math.ceil(reduxPaginatedData?.length / limit);
+  const totalPages = Math.ceil(reduxData?.length / limit);
   const { data: paginatedData } = usePaginatedData(
-    reduxPaginatedData,
+    reduxData,
     page,
     limit,
     search
@@ -38,14 +38,16 @@ export default function Page() {
 
   const categoriesOption =
     Array.from(
-      new Set(data?.data?.data.flatMap((item) => item.category_type))
+      Array.from(
+        new Set(data?.data?.data.flatMap((item) => item.category_type))
+      )
     ) || [];
   useEffect(() => {
     if (podcasts) {
-      console.log(podcasts);
       dispatch(setPodcast(podcasts));
+      dispatch(setFilter("all"));
     }
-  }, [isEpisodeSuccess, podcasts]);
+  }, [isEpisodeSuccess]);
   return (
     <div className="bg-[#fcfcfc] app-container pb-[87px]">
       <div className="mx-auto app-width">
@@ -60,12 +62,16 @@ export default function Page() {
               </p>
 
               <select
+                value={"all"}
                 onChange={(e) =>
                   dispatch(setFilter(e.target.value as filterType))
                 }
               >
+                <option value={"all"} className=" font-[700] text-[#282828]">
+                  All ...
+                </option>
                 <option value={"latest"} className=" font-[700] text-[#282828]">
-                  Latest ...
+                  Latest
                 </option>
                 <option value={"popular"} className="font-[700] text-[#282828]">
                   Popular
@@ -78,7 +84,10 @@ export default function Page() {
               <p className="text-[#5a5a5a] text-base font-[500] flex gap-1">
                 Sort by category :{" "}
               </p>
-              <select onChange={(e) => dispatch(setCategory(e.target.value))}>
+              <select
+                value={categoriesOption || ""}
+                onChange={(e) => dispatch(setCategory(e.target.value))}
+              >
                 {isEpisodeSuccess &&
                   categoriesOption.length > 0 &&
                   categoriesOption.map((item) => (

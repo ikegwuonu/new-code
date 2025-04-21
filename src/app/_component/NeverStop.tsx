@@ -28,7 +28,7 @@ export default function NeverStop() {
           </div>
         </form>
       </div>
-      <div className="relative mx-auto">
+      <div className="relative xl:mx-auto mx-0">
         <Image src="/Ellipse 39.png" width={404} height={404} alt="Ellipsis" />
         <Image
           src={"/Ellipse 40.png"}

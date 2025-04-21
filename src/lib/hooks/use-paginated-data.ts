@@ -12,7 +12,7 @@ function usePaginatedData<T extends { [key: string]: any }>(
   data: T[],
   page: number,
   limit: number,
-  search: string
+  search?: string
 ): PaginatedData<T> {
   const filteredData = useMemo(() => {
     if (!search) return data;
